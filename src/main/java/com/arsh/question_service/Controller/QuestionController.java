@@ -2,6 +2,8 @@ package com.arsh.question_service.Controller;
 
 
 import com.arsh.question_service.Model.Question;
+import com.arsh.question_service.Model.QuestionWrapper;
+import com.arsh.question_service.Model.Response;
 import com.arsh.question_service.Service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -42,9 +44,21 @@ public class QuestionController {
     public ResponseEntity<String> updateQuestion(@RequestBody Question question){
         return questionService.updateQuestion(question);
     }
+    // Microservices
 
     @GetMapping("generate")
     public ResponseEntity<List<Integer>> getQuestionsForQuiz(@RequestParam String categoryName , @RequestParam Integer numberOfQuestions){
         return questionService.getQuestionsForQuiz(categoryName,numberOfQuestions);
     }
+
+    @PostMapping("getQuestions")
+    public ResponseEntity<List<QuestionWrapper>> getQuestionsFromId(@RequestParam List<Integer> listOfIds){
+        return questionService.getQuestionsFromId(listOfIds);
+    }
+
+    @PostMapping("getScore")
+    public ResponseEntity<Integer> getScore(@RequestBody List<Response> responses){
+        return questionService. getScore(responses);
+    }
+
 }

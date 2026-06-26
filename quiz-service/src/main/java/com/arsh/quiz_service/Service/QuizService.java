@@ -1,5 +1,6 @@
 package com.arsh.quiz_service.Service;
 
+import com.arsh.quiz_service.Feign.QuizInterface;
 import com.arsh.quiz_service.Model.QuestionWrapper;
 import com.arsh.quiz_service.Model.Quiz;
 import com.arsh.quiz_service.Model.Response;
@@ -20,14 +21,17 @@ public class QuizService {
     @Autowired
     QuizDao quizDao;
 
+    @Autowired
+    QuizInterface quizInterface;
+
     public ResponseEntity<String> createQuiz(String category, int numQ, String title) {
 
-//        List<Question> questions = questionDao.findRandomQuestionsByCategory(category,numQ);
-//
-//        Quiz quiz=new Quiz();
-//        quiz.setTitle(title);
-//        quiz.setQuestions(questions);
-//        quizDao.save(quiz);
+        List<Integer> questions = quizInterface.getQuestionsForQuiz(category,numQ).getBody();
+        Quiz quiz=new Quiz();
+        quiz.setTitle(title);
+        quiz.setQuestionIds(questions);
+        quizDao.save(quiz);
+
 
         return new ResponseEntity<>("Quiz created successfully", HttpStatus.CREATED);
 

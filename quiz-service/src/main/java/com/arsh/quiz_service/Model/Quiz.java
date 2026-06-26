@@ -14,17 +14,17 @@ public class Quiz {
     private Integer id;
     private String title;
 
-    @ManyToMany
-    private List<Question> questions;
+    @ElementCollection
+    private List<Integer> questionIds;
 
     public Quiz(){
 
     }
 
-    public Quiz(Integer id, String title, List<Question> questions) {
-        this.id = id;
+    public Quiz(List<Integer> questions, String title, Integer id) {
+        this.questionIds = questions;
         this.title = title;
-        this.questions = questions;
+        this.id = id;
     }
 
     public Integer getId() {
@@ -43,11 +43,11 @@ public class Quiz {
         this.title = title;
     }
 
-    public List<Question> getQuestions() {
-        return questions;
+    public List<Integer> getQuestionids() {
+        return questionIds;
     }
 
-    public void setQuestions(List<Question> questions) {
-        this.questions = questions;
+    public void setQuestionIds(List<Integer> questions) {
+        this.questionIds = questions;
     }
 }
